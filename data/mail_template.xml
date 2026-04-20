@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_approval_request" model="mail.template">
+            <field name="name">Sales Order: Approval Requested</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Approval Required: Sales Order ${object.name}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear Manager,</p>
+                <p>Sales order <strong>${object.name}</strong> from <strong>${object.partner_id.name}</strong>
+                requires your approval.</p>
+                <p><strong>Amount:</strong> ${object.amount_total} ${object.currency_id.name}</p>
+                <p><strong>Requested by:</strong> ${object.user_id.name}</p>
+                <p>Please log in to Odoo to approve or reject this order.</p>
+            ]]></field>
+            <field name="auto_delete">True</field>
+        </record>
+
+        <record id="mail_template_approval_approved" model="mail.template">
+            <field name="name">Sales Order: Approved</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Approved: Sales Order ${object.name}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.user_id.name},</p>
+                <p>Your sales order <strong>${object.name}</strong> has been
+                <strong style="color:green">approved</strong> by ${object.approved_by.name}.</p>
+                <p>You may now confirm the order.</p>
+            ]]></field>
+            <field name="auto_delete">True</field>
+        </record>
+
+        <record id="mail_template_approval_rejected" model="mail.template">
+            <field name="name">Sales Order: Rejected</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Rejected: Sales Order ${object.name}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.user_id.name},</p>
+                <p>Your sales order <strong>${object.name}</strong> has been
+                <strong style="color:red">rejected</strong>.</p>
+                <p><strong>Reason:</strong> ${object.rejection_reason}</p>
+                <p>Please revise and resubmit for approval.</p>
+            ]]></field>
+            <field name="auto_delete">True</field>
+        </record>
+
+    </data>
+</odoo>
